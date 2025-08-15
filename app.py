@@ -1,6 +1,10 @@
 
 import streamlit as st
 
+password = st.text_input("Contraseña", type="password")
+if password != "febecos2025":
+    st.stop()
+
 # Configuración de página
 st.set_page_config(page_title="Calculadora MCA - Febecos", layout="centered")
 st.title("Calculadora de Columna MCA - Febecos")
