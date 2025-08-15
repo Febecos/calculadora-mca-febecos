@@ -1,4 +1,3 @@
-
 import streamlit as st
 
 # Encabezado
@@ -10,6 +9,7 @@ st.markdown("""
 Esta herramienta te permite calcular la columna total de bombeo (MCA) incluyendo:
 - Nivel dinámico
 - Altura sobre tierra
+- Presión requerida
 - Longitud horizontal de cañería
 - Accesorios (curvas, codos, válvulas)
 - Tipo de material del caño
@@ -21,13 +21,14 @@ Esta herramienta te permite calcular la columna total de bombeo (MCA) incluyendo
 # Entradas del usuario
 nivel_dinamico = st.number_input("Nivel dinámico (m)", min_value=0.0, step=0.1)
 altura_suelo = st.number_input("Altura sobre nivel de tierra (m)", min_value=0.0, step=0.1)
+presion = st.number_input("Presión requerida (m)", min_value=0.0, step=0.1)
 distancia = st.number_input("Distancia horizontal de cañería (m)", min_value=0.0, step=1.0)
 diametro = st.selectbox("Diámetro del caño (pulgadas)", [0.5, 1, 1.5, 2, 2.5, 3, 4, 5, 6])
 caudal_lh = st.number_input("Caudal requerido (litros/hora)", min_value=1, step=100)
 
 # Accesorios
-curvas = st.number_input("Cantidad de curvas 90°", min_value=0, step=1)
-codos = st.number_input("Cantidad de codos 45°", min_value=0, step=1)
+curvas = st.number_input("Cantidad de curvas 90º", min_value=0, step=1)
+codos = st.number_input("Cantidad de codos 45º", min_value=0, step=1)
 valvulas_paso = st.number_input("Cantidad de válvulas de paso", min_value=0, step=1)
 valvulas_retencion = st.number_input("Cantidad de válvulas antirretorno", min_value=0, step=1)
 
@@ -44,7 +45,7 @@ long_equivalente = distancia + curvas*1.07 + codos*0.70 + valvulas_paso*0.36 + v
 hf = round(K * ((Q)**1.85 / diametro**4.87) * long_equivalente * factor_material, 2)
 
 # Columna total MCA
-mca = round(nivel_dinamico + altura_suelo + hf, 2)
+mca = round(nivel_dinamico + altura_suelo + presion + hf, 2)
 
 # Resultados
 st.markdown("---")
